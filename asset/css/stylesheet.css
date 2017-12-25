@@ -1,0 +1,40 @@
+#chat-box , #user-list {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#user-list {
+}
+
+#chat-box , #user-list {
+    height: 500px;
+    border: 1px solid black;
+}
+
+.server-text {
+    height: inherit;
+    width: -webkit-fill-available;
+}
+
+#user-input {
+    padding: 0.5%;
+}
+
+#chat-login {
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    top: 50%;
+    z-index: 1;
+    text-align: center;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+#chat-login * {
+    display: block;
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}

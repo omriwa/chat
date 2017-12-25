@@ -1,0 +1,18 @@
+<script>
+    var userNick;
+    function createUser() {
+        userNick = $('#user-name').val();
+        loginFromHide();
+        addUserToServer(userNick);
+    }
+
+    function loginFromHide() {
+        $('#chat-login').fadeOut(1500,function(){});
+    }
+</script>
+<div id="chat-login">
+    <label>Nickname:</label>
+    <input type="text" id="user-name" require/>
+    <br/>
+    <button class="btn btn-lg btn-success" onClick="createUser()">Login!</button>
+</div>

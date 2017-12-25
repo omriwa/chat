@@ -1,0 +1,62 @@
+<% include ../partials/header.ejs %>
+<%include ../partials/form.ejs %>
+    <h1 style="text-align: center">chat</h1>
+    <div class="container">
+        <div class="col-md-8" id="chat-box">
+            <textarea id="server-text" class="server-text" readonly></textarea>
+        </div>
+        
+        <div class="col-md-4" id="user-list">
+            <textarea id="server-user-list" class="server-text" readonly></textarea>
+        </div>
+    </div>
+    
+    <div class="container">
+        <input id="user-input" class="col-md-8" type="text"/>
+        <button onClick="sendMsg()" class="col-md-4 btn btn-primary">Send!</button>
+    </div>
+    
+    <script>
+        var socket = io();
+        socket.on('add-user', function(list){
+            let userList = $('#server-user-list');
+            // chat.attr('readonly',false);//make it editable
+            let txt = '';
+            list.forEach(function(user){
+                txt += user + "\n";
+            });
+            userList.val(txt);
+            userList.attr('readonly',true);//make it editable
+        });
+        socket.on('server-msg',function(userData) {
+            let chat = $('#server-text');
+            // chat.attr('readonly',false);//make it editable
+            let txt = chat.val();
+            txt += userData.nick + ": " + userData.msg + "\n";
+            chat.val(txt);
+            chat.attr('readonly',true);//make it editable
+        });
+        
+        function sendMsg() {
+            let msg = $('#user-input').val();
+            let userData = {
+                msg: msg,
+                nick: userNick
+            };
+            socket.emit('user-msg',userData);
+            //clear the input
+            $('#user-input').val('');
+        }
+        
+        function addUserToServer() {
+            socket.emit('add-user',userNick);
+        }
+        
+        $(document).ready(function() {
+            $(window).on("beforeunload", function() { 
+                socket.emit('disconnect-user',userNick);
+            })
+        });
+            
+    </script> 
+<% include ../partials/footer.ejs %>
